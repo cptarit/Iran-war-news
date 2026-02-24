@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="اخبار جنگ ایران">
+<title>اخبار جنگ ایران</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05080f;
+  --card: #0c1220;
+  --card2: #101828;
+  --border: #1a2840;
+  --red: #e63946;
+  --orange: #f59e0b;
+  --gold: #f4a261;
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --txt: #e2e8f4;
+  --txt2: #7a94bb;
+  --muted: #3a5070;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--txt);display:flex;flex-direction:column}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#080c18,#0e1726);border-bottom:1px solid var(--border);padding:0 16px;flex-shrink:0;z-index:50}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:10px 0 0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--red),#ff6b35);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 4px 15px rgba(230,57,70,.45)}
+.logo-name{font-size:16px;font-weight:900;color:#fff;line-height:1.2}
+.logo-by{font-size:11px;font-weight:700;color:var(--gold);margin-top:1px;display:flex;align-items:center;gap:3px}
+.logo-by span{color:var(--muted);font-weight:400}
+.live-pill{display:flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);padding:5px 12px;border-radius:20px;font-size:12px;color:var(--green);font-weight:700}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* DESIGNER STRIP */
+.dstrip{margin:8px -16px 0;background:linear-gradient(90deg,rgba(230,57,70,.1),rgba(244,162,97,.07),rgba(230,57,70,.1));border-top:1px solid rgba(230,57,70,.18);padding:7px 16px;display:flex;align-items:center;justify-content:space-between}
+.dstrip-label{font-size:10px;color:var(--muted);letter-spacing:.5px}
+.dstrip-name{font-size:13px;font-weight:900;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.dstrip-insta{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800;color:#e1306c;background:rgba(225,48,108,.1);border:1px solid rgba(225,48,108,.25);padding:4px 10px;border-radius:12px;text-decoration:none}
+
+/* TICKER */
+.ticker{background:linear-gradient(90deg,#b00010,var(--red));padding:7px 0;overflow:hidden;position:relative;flex-shrink:0}
+.tbadge{position:absolute;right:0;top:0;bottom:0;background:#8b0000;padding:0 12px;display:flex;align-items:center;font-size:10px;font-weight:900;z-index:2;white-space:nowrap}
+.tinner{display:flex;animation:scroll 35s linear infinite;padding-right:90px}
+.tinner span{white-space:nowrap;font-size:12px;font-weight:600;padding-right:36px}
+.tinner span::before{content:'◆ ';opacity:.6}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FILTERS */
+.filters{display:flex;gap:7px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:rgba(10,14,24,.92);backdrop-filter:blur(10px);flex-shrink:0;z-index:40}
+.filters::-webkit-scrollbar{display:none}
+.fb{white-space:nowrap;padding:6px 14px;border-radius:18px;font-size:12px;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--txt2);cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:all .18s;flex-shrink:0}
+.fb.on{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 3px 12px rgba(230,57,70,.35)}
+.fb:active{transform:scale(.93)}
+
+/* SCROLL AREA */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scroll::-webkit-scrollbar{width:2px}
+.scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.content{padding:14px 16px;max-width:500px;margin:0 auto}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 8px;text-align:center}
+.stat-n{font-size:22px;font-weight:900;line-height:1.1}
+.stat-l{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* UPDATE BAR */
+.updbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.updtime{font-size:11px;color:var(--muted)}
+.updbtn{background:var(--card);border:1px solid var(--border);color:var(--red);padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Vazirmatn',sans-serif;display:flex;align-items:center;gap:4px;transition:all .2s}
+.updbtn:active{transform:scale(.95)}
+.spin{animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* FEATURED */
+.featured{background:linear-gradient(135deg,#180810,#0f1825);border:1px solid rgba(230,57,70,.28);border-radius:16px;overflow:hidden;margin-bottom:14px;cursor:pointer;transition:transform .18s}
+.featured:active{transform:scale(.98)}
+.feat-img{width:100%;height:165px;display:flex;align-items:center;justify-content:center;font-size:55px;background:linear-gradient(135deg,#1a0f14,#0f1a2a)}
+.feat-body{padding:13px 15px 15px}
+.feat-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(230,57,70,.18);border:1px solid rgba(230,57,70,.32);color:#ff8090;padding:3px 10px;border-radius:9px;font-size:11px;font-weight:800;margin-bottom:9px}
+.feat-title{font-size:17px;font-weight:800;line-height:1.65;color:var(--txt);margin-bottom:8px}
+.feat-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.feat-src{color:var(--gold);font-weight:700}
+
+/* SECTION */
+.sec{display:flex;align-items:center;gap:8px;margin:18px 0 12px}
+.sec-t{font-size:15px;font-weight:800}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.sec-cnt{background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:9px}
+
+/* NEWS CARD */
+.nc{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px;margin-bottom:10px;cursor:pointer;display:flex;gap:11px;position:relative;overflow:hidden;transition:all .18s}
+.nc::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.nc.breaking::after{background:var(--red)}.nc.warning::after{background:var(--orange)}
+.nc:active{transform:scale(.98);background:var(--card2)}
+.nc-ico{width:48px;height:48px;flex-shrink:0;background:var(--card2);border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.nc-body{flex:1;min-width:0}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:7px}
+.tr{background:rgba(230,57,70,.14);color:#ff8090;border:1px solid rgba(230,57,70,.28)}
+.to{background:rgba(245,158,11,.14);color:#fcd34d;border:1px solid rgba(245,158,11,.28)}
+.tg{background:rgba(34,197,94,.12);color:#6ee09a;border:1px solid rgba(34,197,94,.25)}
+.tb{background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.25)}
+.tnew{background:linear-gradient(135deg,rgba(230,57,70,.25),rgba(255,107,53,.15));color:#ffd0d5;border:1px solid rgba(230,57,70,.4);animation:tf 2s infinite}
+@keyframes tf{0%,100%{opacity:1}50%{opacity:.6}}
+.nc-title{font-size:13.5px;font-weight:700;line-height:1.7;color:var(--txt);margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.nc-foot{display:flex;justify-content:space-between;font-size:11px}
+.nsrc{color:var(--gold);font-weight:700}
+.ntime{color:var(--muted)}
+
+/* MAP */
+.map-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:14px;position:relative}
+#mapCanvas{display:block;width:100%;cursor:pointer;touch-action:manipulation}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--border);background:rgba(8,12,22,.85)}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt2)}
+.leg-d{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.map-tap-hint{padding:8px 14px;text-align:center;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+
+/* MAP INFO PANEL */
+.mip{position:absolute;bottom:0;left:0;right:0;background:rgba(6,10,20,.97);border-top:1px solid var(--border);padding:14px 16px 16px;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);backdrop-filter:blur(16px)}
+.mip.open{transform:translateY(0)}
+.mip-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.mip-close{background:var(--card);border:1px solid var(--border);color:var(--txt2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.mip-title{font-size:16px;font-weight:900;color:var(--txt);margin-bottom:3px}
+.mip-status{font-size:12px;font-weight:800;margin-bottom:6px}
+.mip-desc{font-size:12px;color:var(--txt2);line-height:1.9}
+
+/* REGION CARD */
+.rc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;display:flex;gap:12px;align-items:flex-start}
+.rc-ico{font-size:22px;flex-shrink:0}
+.rc-name{font-size:14px;font-weight:800;color:var(--txt);margin-bottom:3px}
+.rc-status{font-size:12px;font-weight:700;margin-bottom:3px}
+.rc-desc{font-size:11px;color:var(--muted)}
+
+/* BOOKMARKS */
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-ico{font-size:56px;margin-bottom:14px}
+.empty-txt{font-size:15px;font-weight:700}
+.empty-sub{font-size:12px;margin-top:6px}
+
+/* SOURCES */
+.src-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.src-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:all .18s}
+.src-card.on{border-color:var(--red);background:rgba(230,57,70,.07)}
+.src-card:active{transform:scale(.95)}
+.src-ico{font-size:20px}
+.src-name{font-size:12px;font-weight:800;color:var(--txt2);line-height:1.3}
+.src-url{font-size:9px;color:var(--muted)}
+.src-chk{margin-right:auto;font-size:15px;color:var(--green);opacity:0}
+.src-card.on .src-chk{opacity:1}
+
+/* DESIGNER CARD */
+.designer-card{background:linear-gradient(135deg,rgba(230,57,70,.1),rgba(244,162,97,.07));border:1px solid rgba(230,57,70,.3);border-radius:16px;padding:22px 16px 18px;margin-bottom:14px;text-align:center}
+.dc-title{font-size:11px;color:var(--muted);letter-spacing:.8px;margin-bottom:10px;text-transform:uppercase}
+.dc-name{font-size:26px;font-weight:900;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;line-height:1.2}
+.dc-role{font-size:13px;color:var(--txt2);margin-bottom:14px;font-weight:500}
+.insta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#f77737);padding:10px 24px;border-radius:24px;text-decoration:none;cursor:pointer}
+.insta-btn span{color:#fff;font-size:14px;font-weight:800;font-family:'Vazirmatn',sans-serif}
+
+/* ABOUT CARD */
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px}
+.about-title{font-size:13px;font-weight:800;color:var(--txt2);margin-bottom:7px}
+.about-body{font-size:12px;color:var(--muted);line-height:2}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(6px)}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card2);border-radius:22px 22px 0 0;width:100%;max-height:88vh;overflow-y:auto;padding:18px 18px max(18px,env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);border-top:1px solid var(--border)}
+.overlay.open .modal{transform:translateY(0)}
+.modal-handle{width:38px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 18px}
+.modal-close{position:absolute;top:14px;left:14px;width:32px;height:32px;background:var(--card);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--txt2)}
+.m-stag{display:inline-flex;align-items:center;gap:4px;background:rgba(230,57,70,.14);border:1px solid rgba(230,57,70,.28);color:#ff8090;padding:3px 11px;border-radius:10px;font-size:11px;font-weight:800;margin-bottom:11px}
+.m-title{font-size:19px;font-weight:800;line-height:1.7;color:var(--txt);margin-bottom:11px}
+.m-meta{display:flex;gap:12px;font-size:11px;color:var(--muted);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.m-src{color:var(--gold);font-weight:700}
+.m-body{font-size:15px;line-height:2.1;color:var(--txt2)}
+.m-actions{display:flex;gap:9px;margin-top:18px}
+.abtn{flex:1;padding:11px;border-radius:11px;border:1px solid var(--border);background:var(--card);color:var(--txt2);font-family:'Vazirmatn',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .18s}
+.abtn.primary{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 14px rgba(230,57,70,.3)}
+.abtn:active{transform:scale(.95)}
+.abtn.saved{background:rgba(244,162,97,.15);border-color:var(--gold);color:var(--gold)}
+
+/* TOAST */
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--card2);border:1px solid var(--border);padding:9px 18px;border-radius:18px;font-size:13px;color:var(--txt);font-weight:700;z-index:300;opacity:0;transition:all .28s;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* NAV */
+.nav{background:rgba(7,10,20,.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:7px 0 max(7px,env(safe-area-inset-bottom));flex-shrink:0;z-index:50}
+.nbtn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 16px;border-radius:11px;background:none;border:none;font-family:'Vazirmatn',sans-serif;cursor:pointer;transition:all .18s}
+.nbtn:active{transform:scale(.88)}
+.nbtn.on .n-lbl,.nbtn.on .n-ico{color:var(--red)}
+.nbtn.on .n-ico{filter:drop-shadow(0 0 6px rgba(230,57,70,.7))}
+.n-ico{font-size:22px;display:block}
+.n-lbl{font-size:10px;color:var(--muted);font-weight:700}
+.n-badge{position:relative;display:inline-block}
+.bmc{position:absolute;top:-5px;right:-8px;background:var(--red);color:#fff;font-size:9px;font-weight:900;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;font-family:'Vazirmatn',sans-serif}
+.bmc.show{display:flex}
+
+/* PAGES */
+.page{display:none}.page.on{display:block}
+.sp{height:14px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">⚔️</div>
+      <div>
+        <div class="logo-name">اخبار جنگ ایران</div>
+        <div class="logo-by"><span>طراح:</span> علیرضا عبدلی</div>
+      </div>
+    </div>
+    <div class="live-pill"><div class="dot"></div>زنده</div>
+  </div>
+  <div class="dstrip">
+    <span class="dstrip-label">توسعه‌دهنده</span>
+    <span class="dstrip-name">✦ علیرضا عبدلی ✦</span>
+    <a href="https://instagram.com/icloud_iran" class="dstrip-insta" target="_blank">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      @icloud_iran
+    </a>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tbadge">⚡ فوری</div>
+  <div class="tinner" id="tickerEl"></div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters" id="filterBar">
+  <button class="fb on" onclick="setFilter('all',this)">همه</button>
+  <button class="fb" onclick="setFilter('military',this)">نظامی</button>
+  <button class="fb" onclick="setFilter('diplomatic',this)">دیپلماسی</button>
+  <button class="fb" onclick="setFilter('missiles',this)">موشک</button>
+  <button class="fb" onclick="setFilter('sanctions',this)">تحریم</button>
+  <button class="fb" onclick="setFilter('nuclear',this)">هسته‌ای</button>
+  <button class="fb" onclick="setFilter('regional',this)">منطقه</button>
+</div>
+
+<!-- SCROLL -->
+<div class="scroll" id="scrollArea">
+
+  <!-- HOME -->
+  <div class="page on" id="pg-home">
+    <div class="content">
+      <div class="updbar">
+        <div class="updtime">🕐 <span id="updTime">لحظاتی پیش</span></div>
+        <button class="updbtn" onclick="doRefresh(this)"><span id="rIco">↻</span> بروزرسانی</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-n" id="sAll" style="color:var(--red)">۰</div><div class="stat-l">کل اخبار</div></div>
+        <div class="stat"><div class="stat-n" id="sBrk" style="color:var(--red)">۰</div><div class="stat-l">فوری</div></div>
+        <div class="stat"><div class="stat-n" id="sTod" style="color:var(--green)">۰</div><div class="stat-l">امروز</div></div>
+      </div>
+      <div id="featuredEl"></div>
+      <div class="sec"><span class="sec-t">📰 آخرین اخبار</span><div class="sec-line"></div><span class="sec-cnt" id="newsCnt">۰</span></div>
+      <div id="newsEl"></div>
+      <div class="sp"></div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="page" id="pg-map">
+    <div class="content">
+      <div class="sec" style="margin-top:10px"><span class="sec-t">🗺️ نقشه درگیری‌ها</span><div class="sec-line"></div></div>
+      <div class="map-wrap" id="mapWrap">
+        <canvas id="mapCanvas"></canvas>
+        <div class="map-legend">
+          <div class="leg"><div class="leg-d" style="background:#ef4444;box-shadow:0 0 6px #ef4444"></div>درگیری فعال</div>
+          <div class="leg"><div class="leg-d" style="background:#f59e0b;box-shadow:0 0 6px #f59e0b"></div>تنش بالا</div>
+          <div class="leg"><div class="leg-d" style="background:#22c55e;box-shadow:0 0 6px #22c55e"></div>پایش مستمر</div>
+          <div class="leg"><div class="leg-d" style="background:#f4a261;box-shadow:0 0 6px #f4a261"></div>هسته‌ای</div>
+        </div>
+        <div class="map-tap-hint">👆 روی نقاط رنگی کلیک کنید</div>
+        <div class="mip" id="mip">
+          <div class="mip-row">
+            <div>
+              <div class="mip-title" id="mipT"></div>
+              <div class="mip-status" id="mipS"></div>
+              <div class="mip-desc" id="mipD"></div>
+            </div>
+            <button class="mip-close" onclick="closeMip()">✕</button>
+          </div>
+        </div>
+      </div>
+      <div class="sec"><span class="sec-t">🔴 مناطق درگیر</span><div class="sec-line"></div></div>
+      <div id="regionsEl"></div>
+      <div class="sp"></div>
+    </div>
+  </div>
+
+  <!-- BOOKMARKS -->
+  <div class="page" id="pg-bm">
+    <div class="content">
+      <div class="sec" style="margin-top:10px"><span class="sec-t">🔖 ذخیره‌شده‌ها</span><div class="sec-line"></div><span class="sec-cnt" id="bmCnt">۰</span></div>
+      <div id="bmEl"></div>
+      <div class="sp"></div>
+    </div>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="page" id="pg-src">
+    <div class="content">
+      <div class="sec" style="margin-top:10px"><span class="sec-t">📡 منابع و سازنده</span><div class="sec-line"></div></div>
+
+      <!-- PROMINENT DESIGNER CARD -->
+      <div class="designer-card">
+        <div class="dc-title">طراحی و توسعه</div>
+        <div class="dc-name">علیرضا عبدلی</div>
+        <div class="dc-role">توسعه‌دهنده نرم‌افزار</div>
+        <a href="https://instagram.com/icloud_iran" class="insta-btn" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span>@icloud_iran</span>
+        </a>
+      </div>
+
+      <div class="src-grid" id="srcEl"></div>
+      <div class="about-card">
+        <div class="about-title">⚠️ درباره این اپ</div>
+        <div class="about-body">این اپلیکیشن اخبار را از منابع معتبر خبری جمع‌آوری می‌کند. محتوا نظر شخصی سازنده نیست. برای اخبار دقیق‌تر به منابع اصلی مراجعه کنید.</div>
+      </div>
+      <div class="sp"></div>
+    </div>
+  </div>
+
+</div><!-- /scroll -->
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nbtn on" onclick="goPage('home',this)"><span class="n-ico">🏠</span><span class="n-lbl">خانه</span></button>
+  <button class="nbtn" onclick="goPage('map',this)"><span class="n-ico">🗺️</span><span class="n-lbl">نقشه</span></button>
+  <button class="nbtn" onclick="goPage('bm',this)">
+    <span class="n-badge"><span class="n-ico">🔖</span><span class="bmc" id="bmBadge">۰</span></span>
+    <span class="n-lbl">ذخیره</span>
+  </button>
+  <button class="nbtn" onclick="goPage('src',this)"><span class="n-ico">📡</span><span class="n-lbl">منابع</span></button>
+</nav>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-close" onclick="closeModal()">✕</div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toastEl"></div>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+const NEWS=[
+ {id:1,breaking:true,featured:true,emoji:"🚀",title:"سپاه پاسداران از آمادگی کامل نیروهای موشکی برای پاسخ فوری خبر داد",body:"فرمانده نیروی هوافضای سپاه اعلام کرد تمامی سامانه‌های موشکی در وضعیت آماده‌باش کامل قرار دارند. این اعلام در پی آخرین تنش‌های منطقه‌ای صورت گرفته است. مقامات نظامی تاکید کردند هرگونه تهدید علیه تمامیت ارضی ایران با پاسخ قاطع روبرو خواهد شد.",tags:["نظامی","موشک","فوری"],cat:["military","missiles"],src:"تسنیم",time:"۱۵ دقیقه پیش",sev:"breaking"},
+ {id:2,breaking:false,featured:false,emoji:"🛡️",title:"رزمایش مشترک ایران و روسیه در دریای عمان آغاز شد",body:"نیروهای دریایی ایران و روسیه رزمایش مشترک سه روزه را آغاز کردند. این رزمایش شامل مانورهای تاکتیکی و عملیات نجات است.",tags:["نظامی","روسیه"],cat:["military","regional"],src:"ایرنا",time:"۴۵ دقیقه پیش",sev:"normal"},
+ {id:3,breaking:false,featured:false,emoji:"⚡",title:"حملات پهپادی به مواضع نظامی در سوریه؛ دمشق زیر آتش",body:"گزارش‌های تأییدنشده حاکی از شلیک پهپادهای مسلح به مواضع نظامی در سوریه است.",tags:["منطقه","پهپاد"],cat:["regional","military"],src:"العالم",time:"۱ ساعت پیش",sev:"warning"},
+ {id:4,breaking:false,featured:false,emoji:"🕊️",title:"وزیر خارجه: ایران آماده مذاکره مستقیم با آمریکا در صورت رفع تحریم‌هاست",body:"وزیر امور خارجه گفت ایران راه دیپلماسی را باز می‌داند اما شرط اصلی، لغو کامل تحریم‌های ظالمانه است.",tags:["دیپلماسی","آمریکا"],cat:["diplomatic"],src:"ایسنا",time:"۲ ساعت پیش",sev:"normal"},
+ {id:5,breaking:true,featured:false,emoji:"☢️",title:"آژانس اتمی: ایران غنی‌سازی ۶۰ درصدی را در نطنز ادامه می‌دهد",body:"گزارش جدید آژانس بین‌المللی انرژی اتمی نشان می‌دهد ذخایر اورانیوم غنی‌شده ایران به ۴۵۰ کیلوگرم رسیده است.",tags:["هسته‌ای","فوری"],cat:["nuclear"],src:"رویترز",time:"۳ ساعت پیش",sev:"breaking"},
+ {id:6,breaking:false,featured:false,emoji:"💸",title:"تحریم‌های جدید آمریکا علیه نفتکش‌های ایرانی؛ ۱۰ شرکت در فهرست سیاه",body:"وزارت خزانه‌داری آمریکا ۱۰ شرکت کشتیرانی مرتبط با ایران را تحریم کرد.",tags:["تحریم","اقتصاد"],cat:["sanctions"],src:"وال استریت جورنال",time:"۴ ساعت پیش",sev:"normal"},
+ {id:7,breaking:false,featured:false,emoji:"🤝",title:"نشست سه‌جانبه ایران، روسیه و چین در مسکو برگزار شد",body:"وزرای خارجه ایران، روسیه و چین دیدار کردند. موضوع اصلی مقابله با فشارهای غرب بود.",tags:["دیپلماسی","روسیه"],cat:["diplomatic","regional"],src:"فارس",time:"۵ ساعت پیش",sev:"normal"},
+ {id:8,breaking:false,featured:false,emoji:"🎯",title:"سامانه پدافندی بومی با موفقیت آزمایش شد",body:"وزارت دفاع از آزمایش موفق سامانه پدافند هوایی جدید خبر داد که قادر به رهگیری موشک‌های کروز است.",tags:["نظامی","دفاعی"],cat:["military"],src:"مهر",time:"۶ ساعت پیش",sev:"normal"},
+ {id:9,breaking:false,featured:false,emoji:"🌊",title:"تنش در تنگه هرمز؛ سپاه چند کشتی تجاری را بازرسی کرد",body:"نیروی دریایی سپاه چند کشتی تجاری در تنگه هرمز را متوقف و بازرسی کرد.",tags:["دریایی","هرمز"],cat:["military","regional"],src:"اسپوتنیک",time:"۷ ساعت پیش",sev:"warning"},
+ {id:10,breaking:false,featured:false,emoji:"🏛️",title:"اتحادیه اروپا بسته تحریمی جدیدی علیه مقامات سپاه تصویب کرد",body:"شورای اروپا بسته دهم تحریم‌های خود را علیه مقامات ارشد سپاه تصویب کرد.",tags:["تحریم","اروپا"],cat:["sanctions","diplomatic"],src:"دویچه وله",time:"۸ ساعت پیش",sev:"normal"},
+];
+const REGIONS=[
+ {ico:"🇵🇸",name:"غزه / فلسطین",status:"🔴 جنگ فعال",desc:"بمباران مداوم و عملیات زمینی. بحران انسانی حاد.",c:"var(--red)"},
+ {ico:"🇱🇧",name:"لبنان / حزب‌الله",status:"🟠 تنش بالا",desc:"تبادل آتش منظم در مرز شمالی اسرائیل.",c:"var(--orange)"},
+ {ico:"🇸🇾",name:"سوریه",status:"🔴 درگیری فعال",desc:"حملات هوایی اسرائیل به مواضع ایرانی.",c:"var(--red)"},
+ {ico:"🇾🇪",name:"یمن / انصارالله",status:"🔴 درگیری فعال",desc:"حملات پهپادی به کشتی‌های تجاری در دریای سرخ.",c:"var(--red)"},
+ {ico:"🌊",name:"تنگه هرمز",status:"🟠 تنش دریایی",desc:"توقف کشتی‌های تجاری توسط سپاه.",c:"var(--orange)"},
+ {ico:"🇮🇶",name:"عراق",status:"🟡 پایش مستمر",desc:"فعالیت گروه‌های مقاومت طرفدار ایران.",c:"var(--gold)"},
+];
+const SOURCES=[
+ {ico:"📻",name:"ایرنا",url:"irna.ir",on:true},{ico:"📡",name:"فارس",url:"farsnews.ir",on:true},
+ {ico:"📺",name:"تسنیم",url:"tasnimnews.com",on:true},{ico:"📰",name:"مهر",url:"mehrnews.com",on:true},
+ {ico:"🌐",name:"رویترز",url:"reuters.com",on:true},{ico:"📻",name:"العالم",url:"alalam.ir",on:false},
+ {ico:"🌍",name:"دویچه وله",url:"dw.com/fa",on:false},{ico:"📡",name:"اسپوتنیک",url:"sputniknews.io",on:false},
+];
+const TICKER=["حمله هوایی در سوریه گزارش شد","وزیر خارجه: ایران آماده مذاکره است","آژانس اتمی: غنی‌سازی ادامه دارد","رزمایش دریایی ایران و روسیه آغاز شد","تحریم‌های جدید آمریکا علیه ایران","سپاه: آماده پاسخ قاطع هستیم","تنش در تنگه هرمز بالا گرفت"];
+
+/* ═══════════ MAP DATA ═══════════ */
+const MAP_INFO={
+ iran:{title:'🇮🇷 ایران',status:'🟡 پایش مستمر',color:'#f4a261',desc:'غنی‌سازی ۶۰٪ در نطنز ادامه دارد. تحریم‌های گسترده آمریکا و اروپا. آمادگی کامل نیروهای نظامی.'},
+ iraq:{title:'🇮🇶 عراق',status:'🟢 نسبتاً باثبات',color:'#22c55e',desc:'حضور گروه‌های مقاومت طرفدار ایران. مرزهای مشترک با ایران فعال.'},
+ syria:{title:'🇸🇾 سوریه',status:'🔴 درگیری فعال',color:'#ef4444',desc:'حملات هوایی منظم اسرائیل به مواضع ایرانی. حضور نظامی ایران در شمال سوریه.'},
+ lebanon:{title:'🇱🇧 لبنان',status:'🟠 تنش بالا',color:'#f59e0b',desc:'تبادل آتش منظم با اسرائیل. حزب‌الله در آماده‌باش کامل.'},
+ palestine:{title:'🇵🇸 غزه',status:'🔴 جنگ فعال',color:'#ef4444',desc:'بمباران مداوم و عملیات زمینی. بحران انسانی حاد.'},
+ yemen:{title:'🇾🇪 یمن',status:'🔴 درگیری فعال',color:'#ef4444',desc:'حملات پهپادی و موشکی انصارالله به کشتی‌های تجاری در دریای سرخ.'},
+ hormuz:{title:'🌊 تنگه هرمز',status:'🟠 تنش دریایی',color:'#f59e0b',desc:'بازرسی کشتی‌های تجاری توسط سپاه. ۲۰٪ نفت جهان از اینجا عبور می‌کند.'},
+ saudi:{title:'🇸🇦 عربستان',status:'🟡 تنش سیاسی',color:'#f4a261',desc:'روابط ایران و عربستان در حال عادی‌سازی. توافق میانجیگری چین.'},
+};
+// [key, x%, y%, color]  — verified Middle East coords
+const HOTSPOTS=[
+ ['palestine', 23.5, 32,   '#ef4444'],
+ ['lebanon',   22.5, 27.5, '#f59e0b'],
+ ['syria',     27,   22,   '#ef4444'],
+ ['iraq',      34,   34,   '#22c55e'],
+ ['iran',      50,   30,   '#f4a261'],
+ ['hormuz',    54,   55,   '#f59e0b'],
+ ['yemen',     36,   71,   '#ef4444'],
+ ['saudi',     37,   50,   '#f59e0b'],
+];
+// country polygons [x%,y%]
+const CNTRS=[
+ {c:'#0c2208',s:'#163310',p:[[41,18],[47,15],[53,15],[59,18],[64,22],[67,28],[67,37],[64,43],[59,48],[53,50],[47,50],[42,47],[39,41],[38,33],[39,25]]},// Iran
+ {c:'#141400',s:'#222200',p:[[28,22],[36,20],[39,25],[39,34],[37,40],[33,43],[28,43],[25,38],[25,30],[26,24]]},// Iraq
+ {c:'#100820',s:'#1e1035',p:[[21,14],[30,12],[33,16],[32,21],[28,22],[23,20],[20,17]]},// Syria
+ {c:'#130818',s:'#221230',p:[[21,21],[23,20],[24,25],[22,26],[20,23]]},// Lebanon
+ {c:'#141000',s:'#221a00',p:[[19,25],[22,24],[23,30],[21,32],[18,29]]},// Palestine
+ {c:'#120e00',s:'#201800',p:[[25,43],[37,43],[43,46],[46,53],[45,64],[42,72],[38,74],[28,73],[22,68],[21,57],[22,50],[24,44]]},// Saudi
+ {c:'#160808',s:'#261010',p:[[22,68],[38,74],[42,72],[45,77],[42,82],[36,83],[27,82],[22,75]]},// Yemen
+ {c:'#0e0a00',s:'#1a1400',p:[[55,52],[62,50],[67,55],[66,63],[62,65],[57,62],[54,57]]},// UAE/Oman
+ {c:'#060a18',s:'#0e142a',p:[[16,7],[31,5],[35,8],[35,13],[30,14],[22,14],[17,11],[14,9]]},// Turkey
+ {c:'#0e0800',s:'#1a1200',p:[[9,18],[17,16],[19,22],[18,32],[16,38],[11,38],[7,32],[6,24]]},// Egypt
+ {c:'#080e00',s:'#101800',p:[[65,13],[73,11],[78,16],[78,24],[74,28],[67,28],[64,22]]},// Afghanistan
+ {c:'#080c00',s:'#101600',p:[[73,11],[82,10],[88,18],[87,28],[80,32],[74,30],[67,28],[73,18]]},// Pakistan
+ {c:'#0e0e0a',s:'#181810',p:[[22,24],[27,22],[28,28],[26,35],[23,36],[20,30],[21,24]]},// Jordan
+];
+
+/* ═══════════ STATE ═══════════ */
+let bookmarks=new Set(); // in-memory, no localStorage
+let filter='all';
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const $=id=>document.getElementById(id);
+
+/* ═══════════ TOAST ═══════════ */
+let _tt;
+function toast(m){const t=$('toastEl');t.textContent=m;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400)}
+
+/* ═══════════ INIT ═══════════ */
+window.addEventListener('load',()=>{
+ buildTicker();buildStats();buildFeatured();buildNews();
+ buildRegions();buildSources();buildBookmarks();setTime();
+ setTimeout(initMap,100);
+});
+function setTime(){$('updTime').textContent=new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}
+
+/* ═══════════ TICKER ═══════════ */
+function buildTicker(){const a=[...TICKER,...TICKER];$('tickerEl').innerHTML=a.map(t=>`<span>${t}</span>`).join('')}
+
+/* ═══════════ STATS ═══════════ */
+function buildStats(){$('sAll').textContent=fa(NEWS.length);$('sBrk').textContent=fa(NEWS.filter(n=>n.breaking).length);$('sTod').textContent=fa(NEWS.length)}
+
+/* ═══════════ FEATURED ═══════════ */
+function buildFeatured(){
+ const n=NEWS.find(x=>x.featured);
+ if(!n){$('featuredEl').innerHTML='';return}
+ $('featuredEl').innerHTML=`<div class="featured" onclick="openModal(${n.id})"><div class="feat-img">${n.emoji}</div><div class="feat-body"><div class="feat-badge">🔥 مهم‌ترین خبر</div><div class="feat-title">${n.title}</div><div class="feat-meta"><span class="feat-src">📡 ${n.src}</span><span>${n.time}</span></div></div></div>`;
+}
+
+/* ═══════════ NEWS ═══════════ */
+const TC={نظامی:'to',موشک:'tr',فوری:'tnew tr',هسته‌ای:'to',تحریم:'to',دیپلماسی:'tb',منطقه:'tb',دریایی:'tb',پهپاد:'to',روسیه:'tg',چین:'tg',اروپا:'tb',آمریکا:'to',دفاعی:'tg',اقتصاد:'to',هرمز:'tb'};
+function buildNews(){
+ const list=filter==='all'?NEWS.filter(n=>!n.featured):NEWS.filter(n=>n.cat.includes(filter));
+ $('newsCnt').textContent=fa(list.length);
+ if(!list.length){$('newsEl').innerHTML=`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">خبری یافت نشد</div></div>`;return}
+ $('newsEl').innerHTML=list.map(n=>`<div class="nc ${n.sev}" onclick="openModal(${n.id})"><div class="nc-ico">${n.emoji}</div><div class="nc-body"><div class="tags">${n.tags.map(t=>`<span class="tag ${TC[t]||'tb'}">${t}</span>`).join('')}</div><div class="nc-title">${n.title}</div><div class="nc-foot"><span class="nsrc">📡 ${n.src}</span><span class="ntime">${n.time}</span></div></div></div>`).join('');
+}
+function setFilter(cat,btn){filter=cat;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');buildNews();$('scrollArea').scrollTop=0}
+function doRefresh(btn){$('rIco').classList.add('spin');setTimeout(()=>{$('rIco').classList.remove('spin');setTime();toast('✅ اخبار بروزرسانی شد')},1400)}
+
+/* ═══════════ REGIONS ═══════════ */
+function buildRegions(){
+ $('regionsEl').innerHTML=REGIONS.map(r=>`<div class="rc"><div class="rc-ico">${r.ico}</div><div><div class="rc-name">${r.name}</div><div class="rc-status" style="color:${r.c}">${r.status}</div><div class="rc-desc">${r.desc}</div></div></div>`).join('');
+}
+
+/* ═══════════ SOURCES ═══════════ */
+function buildSources(){
+ $('srcEl').innerHTML=SOURCES.map((s,i)=>`<div class="src-card ${s.on?'on':''}" onclick="toggleSrc(${i},this)"><div class="src-ico">${s.ico}</div><div><div class="src-name">${s.name}</div><div class="src-url">${s.url}</div></div><span class="src-chk">✓</span></div>`).join('');
+}
+function toggleSrc(i,el){el.classList.toggle('on');toast(el.classList.contains('on')?'✅ منبع فعال شد':'منبع غیرفعال شد')}
+
+/* ═══════════ BOOKMARKS (in-memory Set) ═══════════ */
+function buildBookmarks(){
+ const cnt=bookmarks.size;
+ $('bmCnt').textContent=fa(cnt);
+ const badge=$('bmBadge');badge.textContent=fa(cnt);badge.classList.toggle('show',cnt>0);
+ if(!cnt){$('bmEl').innerHTML=`<div class="empty"><div class="empty-ico">🔖</div><div class="empty-txt">هنوز خبری ذخیره نشده</div><div class="empty-sub">روی 🔖 هر خبر کلیک کنید</div></div>`;return}
+ $('bmEl').innerHTML=NEWS.filter(n=>bookmarks.has(n.id)).map(n=>`<div class="nc" onclick="openModal(${n.id})"><div class="nc-ico">${n.emoji}</div><div class="nc-body"><div class="nc-title">${n.title}</div><div class="nc-foot"><span class="nsrc">📡 ${n.src}</span><span class="ntime">${n.time}</span></div></div></div>`).join('');
+}
+function toggleBookmark(id){
+ if(bookmarks.has(id)){bookmarks.delete(id);toast('خبر از ذخیره‌ها حذف شد')}
+ else{bookmarks.add(id);toast('✅ خبر ذخیره شد')}
+ buildBookmarks();
+ // update button in open modal
+ const btn=document.querySelector('#modalBody .bm-btn');
+ if(btn){const s=bookmarks.has(id);btn.className='abtn bm-btn'+(s?' saved':'');btn.textContent=s?'🔖 حذف از ذخیره':'🔖 ذخیره'}
+}
+
+/* ═══════════ MODAL ═══════════ */
+function openModal(id){
+ const n=NEWS.find(x=>x.id===id);if(!n)return;
+ const s=bookmarks.has(id);
+ $('modalBody').innerHTML=`
+  <div class="m-stag">📡 ${n.src}</div>
+  <div class="m-title">${n.title}</div>
+  <div class="m-meta"><span class="m-src">${n.src}</span><span>${n.time}</span></div>
+  <div class="tags" style="margin-bottom:12px">${n.tags.map(t=>`<span class="tag ${TC[t]||'tb'}">${t}</span>`).join('')}</div>
+  <div class="m-body">${n.body}</div>
+  <div class="m-actions">
+   <button class="abtn bm-btn ${s?'saved':''}" onclick="toggleBookmark(${id})">${s?'🔖 حذف از ذخیره':'🔖 ذخیره'}</button>
+   <button class="abtn" onclick="doShare(${id})">📤 اشتراک</button>
+   <button class="abtn primary" onclick="toast('در حال باز کردن...')">🌐 منبع</button>
+  </div>`;
+ $('overlay').classList.add('open');
+ document.body.style.overflow='hidden';
+}
+function closeModal(){$('overlay').classList.remove('open');document.body.style.overflow=''}
+function doShare(id){const n=NEWS.find(x=>x.id===id);if(navigator.share)navigator.share({title:n.title,text:n.body.slice(0,100)+'...'});else toast('📋 عنوان کپی شد')}
+
+/* ═══════════ NAV ═══════════ */
+function goPage(name,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+ document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
+ $('pg-'+name).classList.add('on');btn.classList.add('on');
+ $('filterBar').style.display=name==='home'?'flex':'none';
+ $('scrollArea').scrollTop=0;
+ if(name==='map')setTimeout(initMap,60);
+}
+
+/* ═══════════ MAP (Canvas) ═══════════ */
+let animId=null,pt=0;
+
+function initMap(){
+ const canvas=$('mapCanvas');
+ if(!canvas)return;
+ const W=canvas.offsetWidth||360;
+ const H=Math.round(W*0.63);
+ canvas.width=W*2;canvas.height=H*2; // retina
+ canvas.style.width=W+'px';canvas.style.height=H+'px';
+ canvas.onclick=null;
+ canvas.addEventListener('click',onMapClick);
+ if(animId)cancelAnimationFrame(animId);
+ animLoop();
+}
+
+function animLoop(){
+ const canvas=$('mapCanvas');
+ if(!canvas||!$('pg-map').classList.contains('on')){animId=null;return}
+ pt+=0.045;
+ drawMap(canvas);
+ animId=requestAnimationFrame(animLoop);
+}
+
+function drawMap(canvas){
+ const ctx=canvas.getContext('2d');
+ const W=canvas.width,H=canvas.height;
+ ctx.clearRect(0,0,W,H);
+
+ // bg
+ const g=ctx.createLinearGradient(0,0,0,H);
+ g.addColorStop(0,'#03060c');g.addColorStop(1,'#050a14');
+ ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+ // grid
+ ctx.strokeStyle='rgba(15,35,65,0.5)';ctx.lineWidth=1;
+ for(let x=0;x<=W;x+=W/8){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+ for(let y=0;y<=H;y+=H/6){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+
+ // countries
+ for(const c of CNTRS){
+  ctx.beginPath();
+  ctx.moveTo(c.p[0][0]/100*W,c.p[0][1]/100*H);
+  for(let i=1;i<c.p.length;i++)ctx.lineTo(c.p[i][0]/100*W,c.p[i][1]/100*H);
+  ctx.closePath();ctx.fillStyle=c.c;ctx.fill();
+  ctx.strokeStyle=c.s;ctx.lineWidth=1.5;ctx.stroke();
+ }
+
+ // labels
+ const LBL=[
+  ['ایران',50,33,'#1e6020'],['عراق',32,33,'#404018'],
+  ['سوریه',27,18,'#3a2060'],['عربستان',34,57,'#504020'],
+  ['یمن',34,77,'#602020'],['ترکیه',25,10,'#182050'],
+  ['مصر',13,27,'#483818'],['افغانستان',71,21,'#285018'],
+ ];
+ ctx.textAlign='center';ctx.textBaseline='middle';
+ for(const [name,x,y,col] of LBL){
+  ctx.font=`bold ${Math.round(W*0.025)}px Vazirmatn,sans-serif`;
+  ctx.fillStyle=col;ctx.fillText(name,x/100*W,y/100*H);
+ }
+
+ // water labels
+ ctx.font=`${Math.round(W*0.018)}px Vazirmatn,sans-serif`;
+ ctx.fillStyle='rgba(12,55,110,0.75)';
+ ctx.fillText('خلیج فارس',51/100*W,51/100*H);
+ ctx.fillText('دریای سرخ',20/100*W,52/100*H);
+ ctx.fillText('دریای عرب',65/100*W,83/100*H);
+ ctx.fillText('مدیترانه',13/100*W,18/100*H);
+ ctx.fillText('دریای خزر',63/100*W,14/100*H);
+
+ // hotspots
+ const R=Math.round(W*0.018);
+ for(const [key,px,py,color] of HOTSPOTS){
+  const x=px/100*W,y=py/100*H;
+  // pulse rings
+  for(let i=0;i<2;i++){
+   const phase=(pt+i*Math.PI)%(Math.PI*2);
+   const pct=phase/(Math.PI*2);
+   const pr=R+pct*R*2.8;
+   const alpha=(1-pct)*0.55;
+   const hex=Math.round(alpha*255).toString(16).padStart(2,'0');
+   ctx.beginPath();ctx.arc(x,y,pr,0,Math.PI*2);
+   ctx.strokeStyle=color+hex;ctx.lineWidth=2;ctx.stroke();
+  }
+  // glow
+  const glow=ctx.createRadialGradient(x,y,0,x,y,R*2);
+  glow.addColorStop(0,color+'55');glow.addColorStop(1,color+'00');
+  ctx.beginPath();ctx.arc(x,y,R*2,0,Math.PI*2);
+  ctx.fillStyle=glow;ctx.fill();
+  // core
+  ctx.beginPath();ctx.arc(x,y,R,0,Math.PI*2);
+  ctx.fillStyle=color;ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1.5;ctx.stroke();
+  // emoji label
+  const info=MAP_INFO[key];
+  if(info){
+   const emoji=info.title.split(' ')[0];
+   ctx.font=`${Math.round(R*1.5)}px serif`;
+   ctx.textAlign='center';ctx.textBaseline='bottom';
+   ctx.fillStyle='#fff';
+   ctx.fillText(emoji,x,y-R-2);
+  }
+ }
+}
+
+function onMapClick(e){
+ const canvas=$('mapCanvas');if(!canvas)return;
+ const rect=canvas.getBoundingClientRect();
+ const mx=(e.clientX-rect.left)*(canvas.width/rect.width);
+ const my=(e.clientY-rect.top)*(canvas.height/rect.height);
+ const W=canvas.width,H=canvas.height;
+ let best=null,bestD=Infinity;
+ for(const [key,px,py] of HOTSPOTS){
+  const hx=px/100*W,hy=py/100*H;
+  const d=Math.hypot(mx-hx,my-hy);
+  const thresh=W*0.08;
+  if(d<thresh&&d<bestD){bestD=d;best=key}
+ }
+ if(best)showMip(best);else closeMip();
+}
+
+function showMip(key){
+ const i=MAP_INFO[key];if(!i)return;
+ $('mipT').textContent=i.title;
+ $('mipS').textContent=i.status;$('mipS').style.color=i.color;
+ $('mipD').textContent=i.desc;
+ $('mip').classList.add('open');
+}
+function closeMip(){$('mip').classList.remove('open')}
+
+// stop animation when page hidden
+const obs=new MutationObserver(()=>{
+ if(!$('pg-map').classList.contains('on')&&animId){cancelAnimationFrame(animId);animId=null}
+});
+obs.observe($('pg-map'),{attributes:true,attributeFilter:['class']});
+window.addEventListener('resize',()=>{if($('pg-map').classList.contains('on'))initMap()});
+setInterval(setTime,60000);
+</script>
+</body>
+</html>
