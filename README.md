@@ -17,7 +17,7 @@
 
 <br/>
 
-[🌐 مشاهده و نصب اپ](https://cptarit.github.io/Iran-war-news) &nbsp;•&nbsp; [📲 آموزش نصب](#-نصب-اپ-روی-گوشی) &nbsp;•&nbsp; [✨ ویژگی‌ها](#-ویژگی‌ها)
+[🌐 مشاهده و نصب اپ](https://cptarit.github.com/Iran-war-news) &nbsp;•&nbsp; [📲 آموزش نصب](#-نصب-اپ-روی-گوشی) &nbsp;•&nbsp; [✨ ویژگی‌ها](#-ویژگی‌ها)
 
 </div>
 
@@ -26,7 +26,7 @@
 ## 🌐 لینک اپ
 
 ```
-https://cptarit.github.io/Iran-war-news
+https://cptarit.github.com/Iran-war-news
 ```
 
 > این لینک را به کاربران بدهید — با یک کلیک اپ باز و قابل نصب است.
